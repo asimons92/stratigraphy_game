@@ -32,6 +32,8 @@ const levels = [
         items: [
             { id: "A", text: "Layer A (Conglomerate)" },
             { id: "B", text: "Layer B (Slate)" },
+            // FIX 1: Added Layer C back in so the puzzle is solvable
+            { id: "C", text: "Layer C (Sandstone)" }, 
             { id: "D", text: "Layer D (Limestone)" },
             { id: "E", text: "Layer E (Limestone)" },
             { id: "F", text: "Layer F (Sandstone)" },
@@ -45,12 +47,12 @@ const levels = [
 
 let currentLevelIndex = 0;
 
-// --- FUNCTION: Just handles the Visuals ---
 function loadLevel(index) {
     const levelData = levels[index];
     currentLevelIndex = index;
     const imgContainer = document.getElementById('game-container');
-    // Ensure you have an 'images' folder or remove 'images/' if not
+    
+    // Make sure your images are actually in an 'images' folder!
     imgContainer.innerHTML = `<img src="images/${levelData.image}" alt="Level ${levelData.id} Image">`;
 
     const listContainer = document.getElementById('layer-list');
@@ -58,19 +60,17 @@ function loadLevel(index) {
 
     levelData.items.forEach(item => {
         const li = document.createElement('li');
-
         li.innerText = item.text;
         li.className = 'layer-card';
         li.setAttribute('data-id', item.id);
-
         listContainer.appendChild(li);
     });
-} // <--- Function ends here! Sortable logic removed from here.
-
+} 
 
 const menuScreen = document.getElementById('menu-screen');
 const gameScreen = document.getElementById('game-screen');
 
+// NOTE: Make sure your HTML buttons have class="difficulty-button" (we called them difficulty-btn before)
 document.querySelectorAll('.difficulty-button').forEach(button => {
     button.addEventListener('click', () =>{
         const levelIndex = button.getAttribute('data-level');
@@ -80,11 +80,11 @@ document.querySelectorAll('.difficulty-button').forEach(button => {
     })
 });
 
+// NOTE: Make sure your HTML button has id="back-button"
 document.getElementById('back-button').addEventListener('click', () => {
     menuScreen.classList.remove('hidden');
     gameScreen.classList.add('hidden');
 });
-
 
 const layerList = document.getElementById('layer-list');
 const sortable = new Sortable(layerList, {
@@ -95,12 +95,46 @@ const sortable = new Sortable(layerList, {
 const checkButton = document.getElementById('check-button');
 checkButton.addEventListener('click', () => {
     const currentOrder = sortable.toArray();
-    console.log(currentOrder);
     const correctOrder = levels[currentLevelIndex].correctOrder;
-    console.log(correctOrder);
+    
+    console.log("Correct:", correctOrder);
+    console.log("Yours:", currentOrder);
+
     if (currentOrder.join(',') === correctOrder.join(',')) {
-        alert('Congratulations! You have solved the puzzle.');
-    } else {
+        const isNewWin = recordWin(levels[currentLevelIndex].id);
+        
+        // FIX 2: Ensure we look up the same key name we saved to
+        const totalWins = JSON.parse(localStorage.getItem('stratigraphy_solved_ids') || "[]").length;
+
+        if (isNewWin) {
+            alert(`Correct! That's a new solved puzzle.\nTotal Solved: ${totalWins}`);
+        } else {
+            alert(`Correct! (You already solved this one before).\nTotal Solved: ${totalWins}`);
+        } 
+        
+        if(confirm('Return to menu?')) {
+            document.getElementById('back-button').click();
+        }
+
+    } else { 
+        // FIX 4: Removed the extra curly brace } that was here
         alert('Sorry, try again.');
     }
 });
+
+function recordWin(puzzleId) {
+    // FIX 2: Changed 'solvedList' to 'stratigraphy_solved_ids' to match the save line
+    let solvedList = JSON.parse(localStorage.getItem('stratigraphy_solved_ids')) || [];
+    
+    if (!solvedList.includes(puzzleId)) {
+        solvedList.push(puzzleId);
+        localStorage.setItem('stratigraphy_solved_ids', JSON.stringify(solvedList));
+        
+        // FIX 3: Fixed typo 'solvedlist' -> 'solvedList'
+        console.log(`New win recorded! Total wins: ${solvedList.length}`);
+        return true;
+    } else {
+        console.log("Already solved this puzzle.");
+        return false;
+    }
+}

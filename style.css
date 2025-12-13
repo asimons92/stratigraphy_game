@@ -1,9 +1,12 @@
+body {
+    font-family: 'Roboto Slab', serif;
+}
+
 .title {
     text-align: center;
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
-    font-family: 'Roboto Slab', serif;
     color: #2c3e50;
     letter-spacing: 0.5px;
 }
@@ -13,7 +16,6 @@
     display: flex;       /* Puts image and list side-by-side */
     gap: 40px;           /* Space between the two main areas */
     align-items: flex-start; /* Aligns them to the top */
-    font-family: sans-serif;
     padding: 20px;
 }
 
