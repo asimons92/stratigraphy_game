@@ -13,14 +13,28 @@
     <h1 class="title">Stratigraphy Game</h1>
 
     <div id="menu-screen">
-        
-        <div id="stats-container">
-            <h3>🏆 Trophy Case</h3>
-            <p>Easy Wins <strong id="stat-easy">0</strong></p>
-            <p>Medium Wins <strong id="stat-medium">0</strong></p>
-            <p>Hard Wins <strong id="stat-hard">0</strong></p>
-            <p>Total Wins <strong id="stat-total">0</strong></p>
-            <p>Completion Rate <strong id="stat-completion-rate">0%</strong></p>
+        <h3>🏆 Trophy Case</h3>
+        <div class="stats-grid">
+            
+            <div class = "stat-card-easy">
+                <span class="stat-label">Easy Wins</span>
+                <strong id="stat-easy">0</strong>
+            </div>
+            <div class= "stat-card-medium">
+                <span class="stat-label">Medium Wins</span>
+                <strong id="stat-medium">0</strong>
+            </div>
+            <div class= "stat-card-hard">
+                <span class="stat-label">Hard Wins</span>
+                <strong id="stat-hard">0</strong>
+            </div>
+            <span class="stat-divider"></span>
+            <div class= "total-row">
+                Total Puzzles Solved <span id="stat-total">0</span>
+            </div>
+            <div class="completion-row">
+                Completion Rate <span id="stat-completion-rate">0%</span>
+            </div>
         </div>
         <h2>Select a Difficulty</h2>
         
