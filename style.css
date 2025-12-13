@@ -238,7 +238,21 @@ body {
     .layer-card {
         padding: 20px; 
         font-size: 1.1rem;
+        /* NEW: This tells the browser "This item is for touching, not scrolling" */
+        touch-action: none; 
+    
+        /* Prevents text highlighting while dragging */
+        user-select: none;
+        -webkit-user-select: none; 
+        
+        /* Hardware acceleration hint */
+        will-change: transform;
     }
+}
+.sortable-ghost {
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+    opacity: 0.5;
 }
 
 /* DEBUG MODE: Delete this later */
