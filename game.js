@@ -1,6 +1,6 @@
 // game.js
 import { getLevels } from './levels.js';
-import { saveWin, getSavedProgress } from './data.js';
+import { saveWin, getSavedProgress, registerSeenPuzzles } from './data.js';
 import { updateDashboard, showScreen } from './ui.js';
 
 let levels = []; // Holds the data once fetched
@@ -85,10 +85,10 @@ let sortable; // Declare sortable at module level
 async function initGame() {
     // 1. Show a loading state (Optional but professional)
     document.getElementById('game-container').innerHTML = "<p>Loading puzzles...</p>";
-
+    
     // 2. FETCH THE DATA
     levels = await getLevels();
-    
+    registerSeenPuzzles(levels);
     // Safety check
     if (levels.length === 0) {
         alert("Error loading puzzles. Check console.");
