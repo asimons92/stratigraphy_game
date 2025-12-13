@@ -90,7 +90,16 @@ const layerList = document.getElementById('layer-list');
 const sortable = new Sortable(layerList, {
     animation: 150,
     dataIdAttr: 'data-id',
-    ghostClass: "sortable-ghost"
+    ghostClass: "sortable-ghost",
+    // Mobile performance optimizations
+    forceFallback: true, // Use Sortable's own drag implementation for better mobile support
+    fallbackTolerance: 0, // More sensitive touch detection
+    touchStartThreshold: 0, // Reduce delay before drag starts
+    preventOnFilter: false, // Avoid unnecessary event prevention
+    // Better mobile dragging
+    fallbackOnBody: true, // Allow dragging outside the container
+    swapThreshold: 0.65, // Threshold for swapping items
+    invertSwap: true // Better swap behavior on mobile
 });
 
 const checkButton = document.getElementById('check-button');

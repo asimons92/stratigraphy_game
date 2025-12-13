@@ -60,6 +60,11 @@ body {
     /* This makes it look interactive */
     cursor: grab; 
     transition: transform 0.1s; /* Smooth movement */
+    /* Prevent text selection during drag */
+    user-select: none;
+    -webkit-user-select: none;
+    /* Touch optimization */
+    -webkit-tap-highlight-color: transparent;
 }
 #check-button {
     background-color: #4CAF50;
@@ -247,12 +252,30 @@ body {
         
         /* Hardware acceleration hint */
         will-change: transform;
+        /* Force hardware acceleration */
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
     }
 }
 .sortable-ghost {
     background-color: #f0f0f0;
     border: 2px dashed #ccc;
     opacity: 0.5;
+    /* Prevent interaction with ghost element */
+    pointer-events: none;
+    /* Ensure smooth movement */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Dragged element styling for better mobile performance */
+.sortable-drag {
+    opacity: 0.8;
+    /* Force hardware acceleration on dragged element */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    /* Disable transitions during drag for smoother movement */
+    transition: none !important;
 }
 
 /* DEBUG MODE: Delete this later */
