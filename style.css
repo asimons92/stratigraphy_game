@@ -1,0 +1,123 @@
+.title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: 'Roboto Slab', serif;
+    color: #2c3e50;
+    letter-spacing: 0.5px;
+}
+
+/* --- LAYOUT (The Parent Boss) --- */
+.main-container {
+    display: flex;       /* Puts image and list side-by-side */
+    gap: 40px;           /* Space between the two main areas */
+    align-items: flex-start; /* Aligns them to the top */
+    font-family: sans-serif;
+    padding: 20px;
+}
+
+/* --- THE IMAGE SIDE --- */
+#game-container {
+    flex: 2; /* Takes up 2/3rds of the space */
+}
+
+#game-container img {
+    max-width: 100%;
+    border: 3px solid #333;
+    border-radius: 8px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.2); /* Adds a subtle shadow */
+}
+
+/* --- THE LIST SIDE --- */
+#sort-container {
+    flex: 1; /* Takes up 1/3rd of the space */
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+}
+
+/* Remove default bullet points and padding */
+#layer-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* --- THE DRAGGABLE CARDS --- */
+.layer-card {
+    background-color: white;
+    margin-bottom: 10px; /* Space between cards */
+    padding: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #444;
+    
+    /* This makes it look interactive */
+    cursor: grab; 
+    transition: transform 0.1s; /* Smooth movement */
+}
+#check-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#check-button:hover {
+    background-color: #388E3C; /* Dimmed, darker green */
+    color: #e0e0e0;           /* Slightly dimmer text */
+    filter: brightness(0.5); /* Subtle dim effect */
+}
+
+/* Optional: Make it look 'pressed' when you hover over it */
+.layer-card:hover {
+    border-color: #888;
+    background-color: #fffdf0; /* Slight yellow tint */
+    transform: scale(1.02);    /* Grows slightly */
+}
+
+.hidden {
+    display: none !important;
+}
+
+#menu-screen {
+    text-align: center;
+    padding: 50px;
+}
+
+.difficulty-button {
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.difficulty-button:hover {
+    background-color: #45a049;
+}
+
+#back-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#back-button:hover {
+    background-color: #388E3C;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stratigraphy Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="title">Stratigraphy Game</h1>
+
+    <div id="menu-screen">
+        <h2>Select a Difficulty</h2>
+        <button class="difficulty-button" data-level="0">Easy</button>
+        <button class="difficulty-button" data-level="1">Medium</button>
+        <button class="difficulty-button" data-level="2">Hard</button>
+    </div>
+    <div id="game-screen" class="hidden">
+        <div class="main-container">
+            <div id="game-container">
+                
+            </div>
+
+            <div id="sort-container">
+                <ul id="layer-list">
+    
+                </ul>
+                <button id="check-button">Check Answer</button>
+            </div>
+        </div>
+    </div>
+    <button id="back-button">Back to Menu</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
