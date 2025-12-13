@@ -1,8 +1,9 @@
 // game.js
-import { levels } from './levels.js';
+import { getLevels } from './levels.js';
 import { saveWin, getSavedProgress } from './data.js';
 import { updateDashboard, showScreen } from './ui.js';
 
+let levels = []; // Holds the data once fetched
 let currentLevelIndex = 0;
 
 // --- CORE GAME FUNCTIONS ---
@@ -45,7 +46,7 @@ document.querySelectorAll('.difficulty-button').forEach(button => {
 document.getElementById('back-button').addEventListener('click', () => {
     showScreen('menu-screen');
     // Refresh stats when returning to menu
-    updateDashboard(); 
+    updateDashboard(levels); 
 });
 
 // 3. Check Answer Button
@@ -79,21 +80,40 @@ document.getElementById('check-button').addEventListener('click', () => {
 
 
 // --- INITIALIZATION ---
+let sortable; // Declare sortable at module level
 
-// 1. Setup Sortable (Your advanced mobile config)
-const layerList = document.getElementById('layer-list');
-const sortable = new Sortable(layerList, {
-    animation: 150,
-    dataIdAttr: 'data-id',
-    ghostClass: "sortable-ghost",
-    forceFallback: true,
-    fallbackTolerance: 0,
-    touchStartThreshold: 0,
-    preventOnFilter: false,
-    fallbackOnBody: true, 
-    swapThreshold: 0.65, 
-    invertSwap: true 
-});
+async function initGame() {
+    // 1. Show a loading state (Optional but professional)
+    document.getElementById('game-container').innerHTML = "<p>Loading puzzles...</p>";
 
-// 2. Initial Render
-updateDashboard(); // Load stats on startup
+    // 2. FETCH THE DATA
+    levels = await getLevels();
+    
+    // Safety check
+    if (levels.length === 0) {
+        alert("Error loading puzzles. Check console.");
+        return;
+    }
+
+    // 3. Setup Sortable (Your advanced mobile config)
+    const layerList = document.getElementById('layer-list');
+    sortable = new Sortable(layerList, {
+        animation: 150,
+        dataIdAttr: 'data-id',
+        ghostClass: "sortable-ghost",
+        forceFallback: true,
+        fallbackTolerance: 0,
+        touchStartThreshold: 0,
+        preventOnFilter: false,
+        fallbackOnBody: true, 
+        swapThreshold: 0.65, 
+        invertSwap: true 
+    });
+
+    // 4. Initial Render
+    updateDashboard(levels); // Load stats on startup
+    console.log("Game initialized with Google Sheet data!");
+}
+
+// Initialize the game when the module loads
+initGame();

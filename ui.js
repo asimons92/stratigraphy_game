@@ -16,9 +16,14 @@ export function updateDashboard(allLevels) {
         if (id.includes('hard')) counts.hard++;
     });
 
+    // Calculate completion rate
+    const totalLevels = allLevels ? allLevels.length : 0;
+    const completionRate = totalLevels > 0 ? Math.round((solved.length / totalLevels) * 100) : 0;
+
     // Update HTML
     document.getElementById('stat-easy').innerText = counts.easy;
     document.getElementById('stat-medium').innerText = counts.medium;
     document.getElementById('stat-hard').innerText = counts.hard;
     document.getElementById('stat-total').innerText = solved.length;
+    document.getElementById('stat-completion-rate').innerText = `${completionRate}%`;
 }

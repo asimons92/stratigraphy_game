@@ -1,46 +1,55 @@
-// levels.js
-export const levels = [
-    {
-        id: "easy_121225",
-        image: "puzzle_easy.png",
-        correctOrder: ['A', 'E', 'D', 'C', 'B'],
-        items: [
-            { id: "A", text: "Layer A (Igneous Rock)" },
-            { id: "B", text: "Layer B (Shale)" },
-            { id: "C", text: "Layer C (Limestone)" },
-            { id: "D", text: "Layer D (Sandstone)" },
-            { id: "E", text: "Layer E (Sandstone)" },
-        ]
-    },
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTUfJsRXsM7a5CQ_-CM0zhUOxTmjnCZJu3RE_Oo_KhLndYFgHSofLd_xfmC6yIj6cFwxTu9ikU_d-eO/pub?output=csv'
 
-    {
-        id: "medium_121225",
-        image: "puzzle_medium.png",
-        correctOrder: ['A','F','E','C','D','B'],
-        items: [
-            { id: "A", text: "Layer A (Quaternary Deposits)" },
-            { id: "B", text: "Layer B (Limestone)" },
-            { id: "C", text: "Layer C (Slate)" },
-            { id: "D", text: "Layer D (Sandstone)" },
-            { id: "E", text: "Layer E (Sandstone)" },
-            { id: "F", text: "Layer F (Erosional Surface (Unconformity))" },
-        ]
-    },
-    {
-        id: "hard_121225",
-        image: "puzzle_hard.png",
-        correctOrder: ['J','A','B','C','I','H','G','D','E','F'],
-        items: [
-            { id: "A", text: "Layer A (Conglomerate)" },
-            { id: "B", text: "Layer B (Slate)" },
-            { id: "C", text: "Layer C (Sandstone)" }, 
-            { id: "D", text: "Layer D (Limestone)" },
-            { id: "E", text: "Layer E (Limestone)" },
-            { id: "F", text: "Layer F (Sandstone)" },
-            { id: "G", text: "Layer G (Cross-bedded Sandstone)" },
-            { id: "H", text: "Layer H (Fault)" },
-            { id: "I", text: "Layer I (Disconformity)" },
-            { id: "J", text: "Layer J (Fault)" },
-        ]
+export async function getLevels() {
+    try{
+        console.log("Fetching levels from Google Sheets...");
+        const response = await fetch(SHEET_URL);
+        const csvText = await response.text();
+        return parseCSV(csvText);
+    } catch (error) {
+        console.error("Could not load levels.", error);
+        return [];
     }
-];
+}
+
+function parseCSV(text) {
+    const lines = text.split('\n');
+    const levels = [];
+
+    for (let i = 1; i < lines.length; i++) {
+        const row = lines[i].trim();
+        if (!row) continue;
+
+        // descriptions cannot have commas
+
+        const cols = row.split(',')
+
+        const id = cols[0].trim();
+        const image = cols[1].trim();
+        const correctOrder = cols[2].trim().split('|');
+
+        const items = [];
+
+        for (let k = 3; k < cols.length; k++) {
+            const textValue = cols[k]
+
+            if (textValue && textValue.trim() !== "") {
+                const charCode = 65 + (k - 3);
+                const layerID = String.fromCharCode(charCode);
+
+                items.push({
+                    id: layerID,
+                    text: textValue.trim()
+                })
+            }
+        }
+        
+        levels.push({
+            id: id,
+            image: image,
+            correctOrder: correctOrder,
+            items: items
+        });
+    }
+    return levels;
+}
