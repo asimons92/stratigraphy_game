@@ -90,6 +90,7 @@ const layerList = document.getElementById('layer-list');
 const sortable = new Sortable(layerList, {
     animation: 150,
     dataIdAttr: 'data-id',
+    ghostClass: "sortable-ghost"
 });
 
 const checkButton = document.getElementById('check-button');
