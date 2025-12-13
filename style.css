@@ -278,8 +278,3 @@ body {
     transition: none !important;
 }
 
-/* DEBUG MODE: Delete this later */
-* {
-    outline: 1px solid red !important;
-    background: rgba(255, 0, 0, 0.05) !important;
-}
