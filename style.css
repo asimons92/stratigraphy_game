@@ -216,3 +216,27 @@ body {
     font-weight: bold;
     text-align: center;
 }
+
+/* --- MOBILE RESPONSIVENESS --- */
+/* Apply these rules ONLY if screen is smaller than 768px (tablets/phones) */
+@media (max-width: 768px) {
+    
+    .main-container {
+        flex-direction: column; /* Stack top-to-bottom instead of side-by-side */
+    }
+
+    #game-container {
+        width: 100%; /* Image takes full width */
+        margin-bottom: 20px;
+    }
+
+    #sort-container {
+        width: 100%; /* List takes full width */
+    }
+
+    /* Make the cards a bit easier to tap with fat fingers */
+    .layer-card {
+        padding: 20px; 
+        font-size: 1.1rem;
+    }
+}

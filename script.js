@@ -90,6 +90,12 @@ const layerList = document.getElementById('layer-list');
 const sortable = new Sortable(layerList, {
     animation: 150,
     dataIdAttr: 'data-id'
+    // --- NEW SETTINGS FOR MOBILE ---
+    delay: 100, // Wait 100ms before dragging (prevents accidental drags when scrolling)
+    delayOnTouchOnly: true, // Only wait on touch devices
+    forceFallback: true, // Ignores native drag (Fixes the laggy visual!)
+    fallbackClass: "sortable-fallback", // Optional: Class for the dragging item
+    touchStartThreshold: 5 // User must move finger 5px before drag starts
 });
 
 const checkButton = document.getElementById('check-button');
