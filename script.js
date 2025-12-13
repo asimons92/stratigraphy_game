@@ -102,7 +102,7 @@ checkButton.addEventListener('click', () => {
 
     if (currentOrder.join(',') === correctOrder.join(',')) {
         const isNewWin = recordWin(levels[currentLevelIndex].id);
-        
+        updateStats();
         // FIX 2: Ensure we look up the same key name we saved to
         const totalWins = JSON.parse(localStorage.getItem('stratigraphy_solved_ids') || "[]").length;
 
@@ -138,3 +138,25 @@ function recordWin(puzzleId) {
         return false;
     }
 }
+
+function updateStats() {
+    const solvedList = JSON.parse(localStorage.getItem('stratigraphy_solved_ids')) || [];
+
+    let easyCount = 0;
+    let mediumCount = 0;
+    let hardCount = 0;
+
+    solvedList.forEach(id =>{
+        if (id.includes('easy')) easyCount++;
+        if (id.includes('medium')) mediumCount++;
+        if (id.includes('hard')) hardCount++;
+    });
+
+    document.getElementById('stat-easy').textContent = easyCount;
+    document.getElementById('stat-medium').textContent = mediumCount;
+    document.getElementById('stat-hard').textContent = hardCount;
+    document.getElementById('stat-total').textContent = solvedList.length;
+    document.getElementById('stat-completion-rate').textContent = ((solvedList.length / levels.length) * 100).toFixed(0) + '%';
+}
+
+updateStats();
