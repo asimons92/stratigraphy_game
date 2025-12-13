@@ -3,7 +3,16 @@ const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTUfJsRXsM7a5
 export async function getLevels() {
     try{
         console.log("Fetching levels from Google Sheets...");
-        const response = await fetch(SHEET_URL);
+        // Add cache-busting query parameter to prevent browser caching
+        const cacheBuster = `?t=${Date.now()}`;
+        const url = SHEET_URL.includes('?') ? `${SHEET_URL}&t=${Date.now()}` : `${SHEET_URL}?t=${Date.now()}`;
+        const response = await fetch(url, {
+            cache: 'no-store', // Prevent caching
+            headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache'
+            }
+        });
         const csvText = await response.text();
         return parseCSV(csvText);
     } catch (error) {

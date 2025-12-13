@@ -1,7 +1,6 @@
-// ui.js
-import { getSavedProgress, getTotalSeenCount } from './data.js'; // Import helper
+import { getSavedProgress, getTotalSeenCount } from './data.js';
 
-
+// --- NEW EXPORT: Handles switching between Menu and Game ---
 export function showScreen(screenId) {
     // 1. Hide everything marked as a "screen"
     document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
@@ -15,30 +14,54 @@ export function showScreen(screenId) {
     }
 }
 
+// --- DASHBOARD UPDATER ---
 export function updateDashboard(currentLevels) {
-    const solvedIds = getSavedProgress();
-    const totalSeen = getTotalSeenCount(); // This will be your cumulative denominator (e.g., 50)
+    const solvedIds = getSavedProgress(); // Already deduplicated
+    const totalSeen = getTotalSeenCount(); // The "Denominator" (Total unique puzzles ever loaded)
     
-    // 1. Calculate Stats Counts
+    // Ensure we're using unique counts
+    const uniqueSolved = new Set(solvedIds).size;
+    const uniqueSeen = totalSeen; // Already unique from getTotalSeenCount()
+    
+    // Debug logging for lifetime stats
+    console.log('📊 Lifetime Stats Update:');
+    console.log(`  - Total Solved (unique): ${uniqueSolved}`);
+    console.log(`  - Total Seen (lifetime, unique): ${uniqueSeen}`);
+    console.log(`  - Solved IDs:`, solvedIds);
+    
+    // 1. Calculate Counts (Wins by difficulty)
     let easy = 0, medium = 0, hard = 0;
     solvedIds.forEach(id => {
+        // Case-insensitive check to be safe
         if (id.toLowerCase().includes('easy')) easy++;
         if (id.toLowerCase().includes('medium')) medium++;
         if (id.toLowerCase().includes('hard')) hard++;
     });
 
-    document.getElementById('stat-easy').innerText = easy;
-    document.getElementById('stat-medium').innerText = medium;
-    document.getElementById('stat-hard').innerText = hard;
-    document.getElementById('stat-total').innerText = solvedIds.length;
+    // 2. Update the HTML numbers
+    // (Ensure these IDs exist in your index.html Trophy Case)
+    const elEasy = document.getElementById('stat-easy');
+    const elMed = document.getElementById('stat-medium');
+    const elHard = document.getElementById('stat-hard');
+    const elTotal = document.getElementById('stat-total');
+    const elRate = document.getElementById('stat-completion-rate');
 
-    // 2. TRUE CAREER COMPLETION
-    // Logic: If they have seen 0 puzzles, prevent dividing by zero.
+    if (elEasy) elEasy.innerText = easy;
+    if (elMed) elMed.innerText = medium;
+    if (elHard) elHard.innerText = hard;
+    if (elTotal) elTotal.innerText = uniqueSolved; // Use unique count
+
+    // 3. TRUE CAREER COMPLETION RATE
+    // Logic: (Total Unique Solved) / (Total Unique Puzzles Ever Seen)
     let percent = 0;
-    if (totalSeen > 0) {
-        percent = Math.round((solvedIds.length / totalSeen) * 100);
+    if (uniqueSeen > 0) {
+        percent = Math.round((uniqueSolved / uniqueSeen) * 100);
+        console.log(`  - Completion Rate: ${uniqueSolved}/${uniqueSeen} = ${percent}%`);
+    } else {
+        console.log(`  - Completion Rate: Cannot calculate (no puzzles seen yet)`);
     }
 
-    // Now it will say "100%" (3 wins / 3 seen) or "50%" (50 wins / 100 seen)
-    document.getElementById('stat-completion-rate').innerText = `${percent}% Career Completion`;
+    if (elRate) {
+        elRate.innerText = `${percent}% Career Completion`;
+    }
 }
