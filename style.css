@@ -240,3 +240,9 @@ body {
         font-size: 1.1rem;
     }
 }
+
+/* DEBUG MODE: Delete this later */
+* {
+    outline: 1px solid red !important;
+    background: rgba(255, 0, 0, 0.05) !important;
+}
