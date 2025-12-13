@@ -89,7 +89,7 @@ document.getElementById('back-button').addEventListener('click', () => {
 const layerList = document.getElementById('layer-list');
 const sortable = new Sortable(layerList, {
     animation: 150,
-    dataIdAttr: 'data-id'
+    dataIdAttr: 'data-id',
     // --- NEW SETTINGS FOR MOBILE ---
     delay: 100, // Wait 100ms before dragging (prevents accidental drags when scrolling)
     delayOnTouchOnly: true, // Only wait on touch devices
