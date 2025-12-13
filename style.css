@@ -123,3 +123,96 @@ body {
 #back-button:hover {
     background-color: #388E3C;
 }
+
+/* --- TROPHY CASE DASHBOARD --- */
+.trophy-case {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 500px; /* Keeps it from getting too wide on desktop */
+    margin: 0 auto 30px auto; /* Centers it and adds space below */
+    text-align: center;
+}
+
+.trophy-case h3 {
+    margin-top: 0;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+/* The Grid: Puts items side-by-side */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    gap: 15px; /* Space between cards */
+    margin-bottom: 15px;
+}
+
+/* The Individual Cards */
+.stat-card {
+    background: #f9f9f9;
+    padding: 15px 5px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 4px solid #ccc; /* Default bottom border */
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #333;
+}
+
+/* Color Coding the Difficulties */
+.stat-card.easy {
+    background-color: #e8f5e9; /* Light Green Background */
+    border-bottom-color: #4CAF50; /* Green Border */
+}
+
+.stat-card.medium {
+    background-color: #fff8e1; /* Light Orange Background */
+    border-bottom-color: #ff9800; /* Orange Border */
+}
+
+.stat-card.hard {
+    background-color: #ffebee; /* Light Red Background */
+    border-bottom-color: #f44336; /* Red Border */
+}
+
+/* Stat divider spans all columns */
+.stat-divider {
+    grid-column: 1 / -1; /* Spans all 3 columns */
+    border-top: 1px solid #eee;
+    margin: 10px 0;
+}
+
+/* The Total Row at the bottom */
+.total-row {
+    grid-column: 1 / -1; /* Spans all 3 columns */
+    padding-top: 10px;
+    padding-bottom: 5px;
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: bold;
+    text-align: center;
+}
+
+.completion-row {
+    grid-column: 1 / -1; /* Spans all 3 columns */
+    padding-bottom: 10px;
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: bold;
+    text-align: center;
+}
