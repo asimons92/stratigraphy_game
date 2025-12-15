@@ -83,7 +83,7 @@ document.getElementById('check-button').addEventListener('click', () => {
 let sortable; // Declare sortable at module level
 
 async function initGame() {
-    // 1. Show a loading state (Optional but professional)
+    // 1. Show a loading state 
     document.getElementById('game-container').innerHTML = "<p>Loading puzzles...</p>";
     
     // 2. FETCH THE DATA
