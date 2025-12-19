@@ -40,6 +40,10 @@ export function registerSeenPuzzles(levelList) {
 
     // 2. Loop through the NEW levels from the sheet
     levelList.forEach(level => {
+        // Skip invalid IDs (empty, null, undefined, or whitespace-only)
+        if (!level.id || level.id.trim() === '') {
+            return;
+        }
         // If we haven't seen this ID before, remember it!
         if (!seenSet.has(level.id)) {
             seenSet.add(level.id);
